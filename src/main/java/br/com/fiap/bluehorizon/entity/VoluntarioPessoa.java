@@ -1,4 +1,4 @@
-package br.com.fiap.savvyfix.bluehorizon.entity;
+package br.com.fiap.bluehorizon.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -34,6 +34,10 @@ public class VoluntarioPessoa {
 
     @Column(name = "DTNASC_PESSOA")
     private LocalDate dtNascimento;
+
+    /*
+     */
+
 
     @Column(name = "SENHA_PESSOA")
     private String senha;

@@ -1,4 +1,4 @@
-package br.com.fiap.savvyfix.bluehorizon.entity;
+package br.com.fiap.bluehorizon.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

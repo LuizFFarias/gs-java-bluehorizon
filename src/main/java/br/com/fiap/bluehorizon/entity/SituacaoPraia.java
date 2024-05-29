@@ -1,4 +1,4 @@
-package br.com.fiap.savvyfix.bluehorizon.entity;
+package br.com.fiap.bluehorizon.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ public class SituacaoPraia {
     private String nome;
 
     @Column(name = "NIVELSUJEIRA_PRAIA")
-    private String nivelSujeira;
+    private Integer nivelSujeira;
 
     @Column(name = "CIDADE_PRAIA")
     private String cidade;
