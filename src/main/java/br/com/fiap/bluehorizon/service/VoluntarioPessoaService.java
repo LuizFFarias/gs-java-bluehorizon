@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Collection;
 
 @Service
@@ -48,10 +49,9 @@ public class VoluntarioPessoaService implements ServiceDTO<VoluntarioPessoa, Vol
 
         var endereco = enderecoService.findById(dto.endereco().id());
         var perfil = perfilService.findById(dto.perfil().id());
+        int dataAtual = LocalDate.now().getYear();
 
-        /*
-        TODO fazer uma verificação de idade para liberar apenas maiores
-         */
+        if (dataAtual -  dto.dtNascimento().getYear() < 18 ) return null;
 
         return VoluntarioPessoa.builder()
                 .cpf(dto.cpf())
