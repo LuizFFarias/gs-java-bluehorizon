@@ -35,9 +35,6 @@ public class VoluntarioPessoa {
     @Column(name = "DTNASC_PESSOA")
     private LocalDate dtNascimento;
 
-    /*
-     */
-
 
     @Column(name = "SENHA_PESSOA")
     private String senha;

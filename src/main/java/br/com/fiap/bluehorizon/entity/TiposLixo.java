@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "TIPOS_LIXO")
+@Table(name = "TIPOS_LIXO", uniqueConstraints = @UniqueConstraint(name = "UK_NOME_TIPOSLIXO", columnNames = "NOME_LIXO"))
 
 public class TiposLixo {
 
