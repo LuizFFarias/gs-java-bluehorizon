@@ -47,6 +47,11 @@ public class VoluntarioPessoaResource implements ResourceDTO<VoluntarioPessoaReq
     @Transactional
     @PostMapping
     public ResponseEntity<VoluntarioPessoaResponse> save(@RequestBody @Valid VoluntarioPessoaRequest r) {
+        if (LocalDate.now().getYear() - r.dtNascimento().getYear() < 18 && LocalDate.now().getMonthValue() >= r.dtNascimento().getMonthValue()
+                && LocalDate.now().getDayOfMonth() > r.dtNascimento().getDayOfMonth()){
+            return ResponseEntity.badRequest().build();
+        }
+
         var entity = service.toEntity(r);
         entity = service.save(entity);
 

@@ -49,9 +49,6 @@ public class VoluntarioPessoaService implements ServiceDTO<VoluntarioPessoa, Vol
 
         var endereco = enderecoService.findById(dto.endereco().id());
         var perfil = perfilService.findById(dto.perfil().id());
-        int dataAtual = LocalDate.now().getYear();
-
-        if (dataAtual -  dto.dtNascimento().getYear() < 18 ) return null;
 
         return VoluntarioPessoa.builder()
                 .cpf(dto.cpf())

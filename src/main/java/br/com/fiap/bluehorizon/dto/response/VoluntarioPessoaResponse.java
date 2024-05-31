@@ -11,7 +11,6 @@ public record VoluntarioPessoaResponse(
         String cpf,
         String nome,
         LocalDate dtNascimento,
-        String senha,
         VoluntarioEnderecoResponse endereco,
         VoluntarioPerfilResponse perfil
 ) {

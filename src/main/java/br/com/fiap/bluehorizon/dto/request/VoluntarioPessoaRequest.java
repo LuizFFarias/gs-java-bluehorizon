@@ -14,14 +14,14 @@ public record VoluntarioPessoaRequest(
         @NotNull
         String nome,
 
-        @NotNull
         @CPF(message = "O cpf não é válido")
         String cpf,
 
-        @NotNull
+        @NotNull(message = "A data não pode ser nula")
         @Past(message = "A data não é válida")
         LocalDate dtNascimento,
 
+        @NotNull
         @NotNull
         @Size(min = 8, max = 15,message = "A senha deve ter entre 8 e 15 caracteres")
         String senha,
