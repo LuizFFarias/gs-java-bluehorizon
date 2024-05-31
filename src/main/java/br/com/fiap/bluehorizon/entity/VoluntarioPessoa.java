@@ -16,7 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "VOLUNTARIO_PESSOA")
+@Table(name = "VOLUNTARIO_PESSOA", uniqueConstraints = @UniqueConstraint(name = "UK_CPF_VOLUNTARIO_PESSOA", columnNames = "CPF_PESSOA"))
 
 public class VoluntarioPessoa {
 

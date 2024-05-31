@@ -10,10 +10,11 @@ import java.time.LocalDate;
 
 public record VoluntarioPessoaRequest(
 
-        @Size(min = 2, max = 50, message = "O nome deve ter entre 2 e 50 caracteres")
         @NotNull
+        @Size(min = 2, max = 50, message = "O nome deve ter entre 2 e 50 caracteres")
         String nome,
 
+        @NotNull
         @CPF(message = "O cpf não é válido")
         String cpf,
 
@@ -21,7 +22,6 @@ public record VoluntarioPessoaRequest(
         @Past(message = "A data não é válida")
         LocalDate dtNascimento,
 
-        @NotNull
         @NotNull
         @Size(min = 8, max = 15,message = "A senha deve ter entre 8 e 15 caracteres")
         String senha,
