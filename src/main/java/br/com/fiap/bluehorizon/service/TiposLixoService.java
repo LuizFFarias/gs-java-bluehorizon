@@ -18,38 +18,70 @@ public class TiposLixoService implements ServiceDTO<TiposLixo, TiposLixoRequest,
 
     @Override
     public Collection<TiposLixo> findAll() {
-        return repo.findAll();
+        try {
+            return repo.findAll();
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public Collection<TiposLixo> findAll(Example<TiposLixo> example) {
-        return repo.findAll(example);
+        try {
+            return repo.findAll(example);
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public TiposLixo findById(Long id) {
-        return repo.findById(id).orElse(null);
+
+        try {
+            return repo.findById(id).orElse(null);
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public TiposLixo save(TiposLixo e) {
-        return repo.save(e);
+
+        try {
+            return repo.save(e);
+        } catch (Exception er){
+            System.out.println("Erro: " + er);
+            return null;
+        }
     }
 
     @Override
     public TiposLixo toEntity(TiposLixoRequest dto) {
-        return TiposLixo.builder()
-                .nome(dto.nome())
-                .valorKg(dto.valorKg())
-                .build();
+        try {
+            return TiposLixo.builder()
+                    .nome(dto.nome())
+                    .valorKg(dto.valorKg())
+                    .build();
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public TiposLixoResponse toResponse(TiposLixo e) {
-        return TiposLixoResponse.builder()
-                .id(e.getId())
-                .nome(e.getNome())
-                .valorKg(e.getValorKg())
-                .build();
+        try {
+            return TiposLixoResponse.builder()
+                    .id(e.getId())
+                    .nome(e.getNome())
+                    .valorKg(e.getValorKg())
+                    .build();
+        } catch (Exception er){
+            System.out.println("Erro: " + er);
+            return null;
+        }
     }
 }

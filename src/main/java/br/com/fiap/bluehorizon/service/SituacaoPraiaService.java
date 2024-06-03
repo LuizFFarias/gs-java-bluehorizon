@@ -19,40 +19,71 @@ public class SituacaoPraiaService implements ServiceDTO<SituacaoPraia, SituacaoP
 
     @Override
     public Collection<SituacaoPraia> findAll() {
-        return repo.findAll();
+        try {
+            return repo.findAll();
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public Collection<SituacaoPraia> findAll(Example<SituacaoPraia> example) {
-        return repo.findAll(example);
+        try {
+            return repo.findAll(example);
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public SituacaoPraia findById(Long id) {
-        return repo.findById(id).orElse(null);
+
+        try {
+            return repo.findById(id).orElse(null);
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public SituacaoPraia save(SituacaoPraia e) {
-        return repo.save(e);
+        try {
+            return repo.save(e);
+        } catch (Exception er){
+            System.out.println("Erro: " + er);
+            return null;
+        }
     }
 
     @Override
     public SituacaoPraia toEntity(SituacaoPraiaRequest dto) {
-        return SituacaoPraia.builder()
-                .nome(dto.nome())
-                .cidade(dto.cidade())
-                .nivelSujeira(dto.nivelSujeira())
-                .build();
+        try {
+            return SituacaoPraia.builder()
+                    .nome(dto.nome())
+                    .cidade(dto.cidade())
+                    .nivelSujeira(dto.nivelSujeira())
+                    .build();
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public SituacaoPraiaResponse toResponse(SituacaoPraia e) {
-        return SituacaoPraiaResponse.builder()
-                .id(e.getId())
-                .nome(e.getNome())
-                .cidade(e.getCidade())
-                .nivelSujeira(e.getNivelSujeira())
-                .build();
+        try {
+            return SituacaoPraiaResponse.builder()
+                    .id(e.getId())
+                    .nome(e.getNome())
+                    .cidade(e.getCidade())
+                    .nivelSujeira(e.getNivelSujeira())
+                    .build();
+        } catch (Exception er){
+            System.out.println("Erro: " + er);
+            return null;
+        }
     }
 }

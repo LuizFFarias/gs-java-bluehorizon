@@ -18,49 +18,81 @@ public class VoluntarioEnderecoService implements ServiceDTO<VoluntarioEndereco,
 
     @Override
     public Collection<VoluntarioEndereco> findAll() {
-        return repo.findAll();
+        try {
+            return repo.findAll();
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public Collection<VoluntarioEndereco> findAll(Example<VoluntarioEndereco> example) {
-        return repo.findAll(example);
+        try {
+            return repo.findAll(example);
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public VoluntarioEndereco findById(Long id) {
-        return repo.findById(id).orElse(null);
+        try {
+            return repo.findById(id).orElse(null);
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public VoluntarioEndereco save(VoluntarioEndereco e) {
-        return repo.save(e);
+        try {
+            return repo.save(e);
+        } catch (Exception er){
+            System.out.println("Erro: " + er);
+            return null;
+        }
     }
 
     @Override
     public VoluntarioEndereco toEntity(VoluntarioEnderecoRequest dto) {
-        return VoluntarioEndereco.builder()
-                .cep(dto.cep())
-                .numero(dto.numero())
-                .rua(dto.rua())
-                .bairro(dto.bairro())
-                .cidade(dto.cidade())
-                .estado(dto.estado())
-                .pais(dto.pais())
-                .build();
+        try {
+            return VoluntarioEndereco.builder()
+                    .cep(dto.cep())
+                    .numero(dto.numero())
+                    .rua(dto.rua())
+                    .bairro(dto.bairro())
+                    .cidade(dto.cidade())
+                    .estado(dto.estado())
+                    .pais(dto.pais())
+                    .build();
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
+
     }
 
     @Override
     public VoluntarioEnderecoResponse toResponse(VoluntarioEndereco e) {
 
-        return VoluntarioEnderecoResponse.builder()
-                .id(e.getId())
-                .cep(e.getCep())
-                .rua(e.getRua())
-                .numero(e.getNumero())
-                .bairro(e.getBairro())
-                .cidade(e.getCidade())
-                .estado(e.getEstado())
-                .pais(e.getPais())
-                .build();
+        try {
+            return VoluntarioEnderecoResponse.builder()
+                    .id(e.getId())
+                    .cep(e.getCep())
+                    .rua(e.getRua())
+                    .numero(e.getNumero())
+                    .bairro(e.getBairro())
+                    .cidade(e.getCidade())
+                    .estado(e.getEstado())
+                    .pais(e.getPais())
+                    .build();
+        } catch (Exception er){
+            System.out.println("Erro: " + er);
+            return null;
+        }
+
     }
 }

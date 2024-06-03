@@ -19,40 +19,72 @@ public class PontosColetaService implements ServiceDTO<PontosColeta, PontosColet
 
     @Override
     public Collection<PontosColeta> findAll() {
-        return repo.findAll();
+        try {
+            return repo.findAll();
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public Collection<PontosColeta> findAll(Example<PontosColeta> example) {
-        return repo.findAll(example);
+
+        try {
+            return repo.findAll(example);
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public PontosColeta findById(Long id) {
-        return repo.findById(id).orElse(null);
+        try {
+            return repo.findById(id).orElse(null);
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public PontosColeta save(PontosColeta e) {
-        return repo.save(e);
+        try {
+            return repo.save(e);
+        } catch (Exception er){
+            System.out.println("Erro: " + er);
+            return null;
+        }
     }
 
     @Override
     public PontosColeta toEntity(PontosColetaRequest dto) {
-        return PontosColeta.builder()
-                .nome(dto.nome())
-                .estado(dto.estado())
-                .gerente(dto.gerente())
-                .build();
+        try {
+            return PontosColeta.builder()
+                    .nome(dto.nome())
+                    .estado(dto.estado())
+                    .gerente(dto.gerente())
+                    .build();
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public PontosColetaResponse toResponse(PontosColeta e) {
-        return PontosColetaResponse.builder()
-                .id(e.getId())
-                .nome(e.getNome())
-                .estado(e.getEstado())
-                .gerente(e.getGerente())
-                .build();
+        try {
+            return PontosColetaResponse.builder()
+                    .id(e.getId())
+                    .nome(e.getNome())
+                    .estado(e.getEstado())
+                    .gerente(e.getGerente())
+                    .build();
+        } catch (Exception er){
+            System.out.println("Erro: " + er);
+            return null;
+        }
+
     }
 }

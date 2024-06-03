@@ -19,36 +19,67 @@ public class VoluntarioPerfilService implements ServiceDTO<VoluntarioPerfil, Vol
 
     @Override
     public Collection<VoluntarioPerfil> findAll() {
-        return repo.findAll();
+        try {
+            return repo.findAll();
+        } catch (Exception e){
+        System.out.println("Erro: " + e);
+        return null;
+    }
     }
 
     @Override
     public Collection<VoluntarioPerfil> findAll(Example<VoluntarioPerfil> example) {
-        return repo.findAll(example);
+        try {
+            return repo.findAll(example);
+        } catch (Exception e){
+        System.out.println("Erro: " + e);
+        return null;
+    }
     }
 
     @Override
     public VoluntarioPerfil findById(Long id) {
-        return repo.findById(id).orElse(null);
+        try {
+            return repo.findById(id).orElse(null);
+        } catch (Exception e) {
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public VoluntarioPerfil save(VoluntarioPerfil e) {
-        return repo.save(e);
+        try {
+            return repo.save(e);
+        } catch (Exception er) {
+            System.out.println("Erro: " + er);
+            return null;
+        }
     }
 
     @Override
     public VoluntarioPerfil toEntity(VoluntarioPerfilRequest dto) {
-        return VoluntarioPerfil.builder()
-                .qntdLixo(dto.qntdLixo())
-                .build();
+        try {
+            return VoluntarioPerfil.builder()
+                    .qntdLixo(dto.qntdLixo())
+                    .build();
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
+
     }
 
     @Override
     public VoluntarioPerfilResponse toResponse(VoluntarioPerfil e) {
-        return VoluntarioPerfilResponse.builder()
-                .id(e.getId())
-                .qntdLixo(e.getQntdLixo())
-                .build();
+        try {
+            return VoluntarioPerfilResponse.builder()
+                    .id(e.getId())
+                    .qntdLixo(e.getQntdLixo())
+                    .build();
+        } catch (Exception er){
+            System.out.println("Erro: " + er);
+            return null;
+        }
     }
 }

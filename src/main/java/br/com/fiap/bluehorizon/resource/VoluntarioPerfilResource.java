@@ -37,10 +37,16 @@ public class VoluntarioPerfilResource implements ResourceDTO<VoluntarioPerfilReq
     })
     @GetMapping(value = "/{id}")
     public ResponseEntity<VoluntarioPerfilResponse> findById(@PathVariable Long id) {
-        var entity = service.findById(id);
-        if (entity == null) return ResponseEntity.notFound().build();
-        var response = service.toResponse(entity);
-        return ResponseEntity.ok(response);
+        try {
+            var entity = service.findById(id);
+            if (entity == null) return ResponseEntity.notFound().build();
+            var response = service.toResponse(entity);
+            return ResponseEntity.ok(response);
+        }  catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+
+
     }
 
     @Override
@@ -53,17 +59,23 @@ public class VoluntarioPerfilResource implements ResourceDTO<VoluntarioPerfilReq
     })
     @PostMapping
     public ResponseEntity<VoluntarioPerfilResponse> save(@RequestBody @Valid VoluntarioPerfilRequest r) {
-        var entity = service.toEntity(r);
-        entity = service.save(entity);
+        try {
+            var entity = service.toEntity(r);
+            entity = service.save(entity);
 
-        var response = service.toResponse(entity);
+            var response = service.toResponse(entity);
 
-        var uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(entity.getId())
-                .toUri();
+            var uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(entity.getId())
+                    .toUri();
 
-        return ResponseEntity.created(uri).body(response);
+            return ResponseEntity.created(uri).body(response);
+        } catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+
+
     }
 
     @Operation(summary = "Realiza busca de todos os perfis e pela quantidade de lixo", method = "GET")
@@ -77,20 +89,26 @@ public class VoluntarioPerfilResource implements ResourceDTO<VoluntarioPerfilReq
             @RequestParam(name = "qntdLixo", required = false) Float qntdLixo
 
     ){
-        var perfil = VoluntarioPerfil.builder()
-                .qntdLixo(qntdLixo)
-                .build();
+        try {
+            var perfil = VoluntarioPerfil.builder()
+                    .qntdLixo(qntdLixo)
+                    .build();
 
-        var matcher = ExampleMatcher.matching()
-                .withMatcher("qntdLixo", ExampleMatcher.GenericPropertyMatchers.contains())
-                .withIgnoreCase()
-                .withIgnoreNullValues();
+            var matcher = ExampleMatcher.matching()
+                    .withMatcher("qntdLixo", ExampleMatcher.GenericPropertyMatchers.contains())
+                    .withIgnoreCase()
+                    .withIgnoreNullValues();
 
-        Example<VoluntarioPerfil> example = Example.of(perfil, matcher);
-        var entities = service.findAll(example);
-        if (entities.isEmpty()) return ResponseEntity.notFound().build();
-        var response = entities.stream().map(service::toResponse).toList();
+            Example<VoluntarioPerfil> example = Example.of(perfil, matcher);
+            var entities = service.findAll(example);
+            if (entities.isEmpty()) return ResponseEntity.notFound().build();
+            var response = entities.stream().map(service::toResponse).toList();
 
-        return ResponseEntity.ok(response);
+            return ResponseEntity.ok(response);
+        } catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+
+
     }
 }

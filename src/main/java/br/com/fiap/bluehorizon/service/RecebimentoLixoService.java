@@ -31,56 +31,87 @@ public class RecebimentoLixoService implements ServiceDTO<RecebimentoLixo, Receb
 
     @Override
     public Collection<RecebimentoLixo> findAll() {
-        return repo.findAll();
+        try {
+            return repo.findAll();
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public Collection<RecebimentoLixo> findAll(Example<RecebimentoLixo> example) {
-        return repo.findAll(example);
+        try {
+            return repo.findAll(example);
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public RecebimentoLixo findById(Long id) {
-        return repo.findById(id).orElse(null);
+
+        try {
+            return repo.findById(id).orElse(null);
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public RecebimentoLixo save(RecebimentoLixo e) {
-        return repo.save(e);
+        try {
+            return repo.save(e);
+        } catch (Exception er){
+            System.out.println("Erro: " + er);
+            return null;
+        }
     }
 
     @Override
     public RecebimentoLixo toEntity(RecebimentoLixoRequest dto) {
 
-        var perfil = perfilService.findById(dto.perfil().id());
-        var pessoa = pessoaService.findById(dto.pessoa().id());
-        var coleta = coletaService.findById(dto.pontosColeta().id());
-        var tiposLixo = lixoService.findById(dto.tiposLixo().id());
+        try {
+            var perfil = perfilService.findById(dto.perfil().id());
+            var pessoa = pessoaService.findById(dto.pessoa().id());
+            var coleta = coletaService.findById(dto.pontosColeta().id());
+            var tiposLixo = lixoService.findById(dto.tiposLixo().id());
 
-        return RecebimentoLixo.builder()
-                .dataRecebimento(dto.dataRecebimento())
-                .perfil(perfil)
-                .pessoa(pessoa)
-                .pontosColeta(coleta)
-                .tiposLixo(tiposLixo)
-                .build();
+            return RecebimentoLixo.builder()
+                    .dataRecebimento(dto.dataRecebimento())
+                    .perfil(perfil)
+                    .pessoa(pessoa)
+                    .pontosColeta(coleta)
+                    .tiposLixo(tiposLixo)
+                    .build();
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
     }
 
     @Override
     public RecebimentoLixoResponse toResponse(RecebimentoLixo e) {
 
-        var perfil = perfilService.toResponse(e.getPerfil());
-        var pessoa = pessoaService.toResponse(e.getPessoa());
-        var coleta = coletaService.toResponse(e.getPontosColeta());
-        var tiposLixo = lixoService.toResponse(e.getTiposLixo());
+        try {
+            var perfil = perfilService.toResponse(e.getPerfil());
+            var pessoa = pessoaService.toResponse(e.getPessoa());
+            var coleta = coletaService.toResponse(e.getPontosColeta());
+            var tiposLixo = lixoService.toResponse(e.getTiposLixo());
 
-        return RecebimentoLixoResponse.builder()
-                .id(e.getId())
-                .dataRecebimento(e.getDataRecebimento())
-                .perfil(perfil)
-                .pessoa(pessoa)
-                .pontosColeta(coleta)
-                .tiposLixo(tiposLixo)
-                .build();
+            return RecebimentoLixoResponse.builder()
+                    .id(e.getId())
+                    .dataRecebimento(e.getDataRecebimento())
+                    .perfil(perfil)
+                    .pessoa(pessoa)
+                    .pontosColeta(coleta)
+                    .tiposLixo(tiposLixo)
+                    .build();
+        } catch (Exception er){
+            System.out.println("Erro: " + er);
+            return null;
+        }
     }
 }

@@ -26,53 +26,89 @@ public class VoluntarioPessoaService implements ServiceDTO<VoluntarioPessoa, Vol
 
     @Override
     public Collection<VoluntarioPessoa> findAll() {
-        return repo.findAll();
+        try {
+            return repo.findAll();
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
+
     }
 
     @Override
     public Collection<VoluntarioPessoa> findAll(Example<VoluntarioPessoa> example) {
-        return repo.findAll(example);
+        try {
+            return repo.findAll(example);
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
+
     }
 
     @Override
     public VoluntarioPessoa findById(Long id) {
-        return repo.findById(id).orElse(null);
+        try {
+            return repo.findById(id).orElse(null);
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
+
     }
 
     @Override
     public VoluntarioPessoa save(VoluntarioPessoa e) {
-        return repo.save(e);
+        try {
+            return repo.save(e);
+        } catch (Exception er){
+            System.out.println("Erro: " + er);
+            return null;
+        }
+
     }
 
     @Override
     public VoluntarioPessoa toEntity(VoluntarioPessoaRequest dto) {
 
-        var endereco = enderecoService.findById(dto.endereco().id());
-        var perfil = perfilService.findById(dto.perfil().id());
+        try {
+            var endereco = enderecoService.findById(dto.endereco().id());
+            var perfil = perfilService.findById(dto.perfil().id());
 
-        return VoluntarioPessoa.builder()
-                .cpf(dto.cpf())
-                .nome(dto.nome())
-                .dtNascimento(dto.dtNascimento())
-                .senha(dto.senha())
-                .endereco(endereco)
-                .perfil(perfil)
-                .build();
+            return VoluntarioPessoa.builder()
+                    .cpf(dto.cpf())
+                    .nome(dto.nome())
+                    .dtNascimento(dto.dtNascimento())
+                    .senha(dto.senha())
+                    .endereco(endereco)
+                    .perfil(perfil)
+                    .build();
+        } catch (Exception e){
+            System.out.println("Erro: " + e);
+            return null;
+        }
+
     }
 
     @Override
     public VoluntarioPessoaResponse toResponse(VoluntarioPessoa e) {
 
-        var endereco = enderecoService.toResponse(e.getEndereco());
-        var perfil = perfilService.toResponse(e.getPerfil());
+        try {
+            var endereco = enderecoService.toResponse(e.getEndereco());
+            var perfil = perfilService.toResponse(e.getPerfil());
 
-        return VoluntarioPessoaResponse.builder()
-                .id(e.getId())
-                .cpf(e.getCpf())
-                .nome(e.getNome())
-                .dtNascimento(e.getDtNascimento())
-                .endereco(endereco)
-                .perfil(perfil)
-                .build();
+            return VoluntarioPessoaResponse.builder()
+                    .id(e.getId())
+                    .cpf(e.getCpf())
+                    .nome(e.getNome())
+                    .dtNascimento(e.getDtNascimento())
+                    .endereco(endereco)
+                    .perfil(perfil)
+                    .build();
+        } catch (Exception er){
+            System.out.println("Erro: " + er);
+            return null;
+        }
+
     }
 }

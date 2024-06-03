@@ -3,8 +3,10 @@ package br.com.fiap.bluehorizon.dto.request;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.format.annotation.NumberFormat;
 
 import java.time.LocalDate;
 
@@ -16,6 +18,7 @@ public record VoluntarioPessoaRequest(
 
         @NotNull(message = "O CPF é obrigatório")
         @CPF(message = "O cpf não é válido")
+        @Pattern(regexp = "\\d{11}", message = "O CEP deve conter apenas números")
         String cpf,
 
         @NotNull(message = "A data é obrigatória")

@@ -37,10 +37,16 @@ public class VoluntarioEnderecoResource implements ResourceDTO<VoluntarioEnderec
     })
     @GetMapping(value = "/{id}")
     public ResponseEntity<VoluntarioEnderecoResponse> findById(@PathVariable Long id) {
-        var entity = service.findById(id);
-        if (entity == null) return ResponseEntity.notFound().build();
-        var response = service.toResponse(entity);
-        return ResponseEntity.ok(response);
+        try {
+            var entity = service.findById(id);
+            if (entity == null) return ResponseEntity.notFound().build();
+            var response = service.toResponse(entity);
+            return ResponseEntity.ok(response);
+        } catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+
+
     }
 
     @Override
@@ -54,17 +60,23 @@ public class VoluntarioEnderecoResource implements ResourceDTO<VoluntarioEnderec
     @PostMapping
     @Transactional
     public ResponseEntity<VoluntarioEnderecoResponse> save(@RequestBody @Valid VoluntarioEnderecoRequest r) {
-        var entity = service.toEntity(r);
-        entity = service.save(entity);
+        try {
+            var entity = service.toEntity(r);
+            entity = service.save(entity);
 
-        var response = service.toResponse(entity);
+            var response = service.toResponse(entity);
 
-        var uri = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(entity.getId())
-                .toUri();
+            var uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                    .path("/{id}")
+                    .buildAndExpand(entity.getId())
+                    .toUri();
 
-        return ResponseEntity.created(uri).body(response);
+            return ResponseEntity.created(uri).body(response);
+        } catch (Exception e){
+            return ResponseEntity.internalServerError().build();
+        }
+
+
     }
 
     @Operation(summary = "Realiza busca de todos os endereços e busca por nome, cep, bairro, estado e pais", method = "GET")
