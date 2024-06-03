@@ -8,8 +8,8 @@ import java.time.LocalDate;
 
 public record RecebimentoLixoRequest(
 
-        @NotNull
-        @PastOrPresent
+        @NotNull(message = "A data é obrigatória")
+        @PastOrPresent(message = "A data deve ser válida")
         LocalDate dataRecebimento,
 
         @Valid

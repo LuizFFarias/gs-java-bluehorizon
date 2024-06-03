@@ -9,6 +9,10 @@ import br.com.fiap.bluehorizon.entity.VoluntarioPessoa;
 import br.com.fiap.bluehorizon.service.VoluntarioEnderecoService;
 import br.com.fiap.bluehorizon.service.VoluntarioPerfilService;
 import br.com.fiap.bluehorizon.service.VoluntarioPessoaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +26,8 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 @RestController
-@RequestMapping(value = "/voluntario-pessoa")
+@RequestMapping(value = "/voluntario-pessoa", produces = {"application/json"})
+@Tag(name = "bluehorizon-api")
 public class VoluntarioPessoaResource implements ResourceDTO<VoluntarioPessoaRequest, VoluntarioPessoaResponse>{
 
     @Autowired
@@ -35,6 +40,12 @@ public class VoluntarioPessoaResource implements ResourceDTO<VoluntarioPessoaReq
     private VoluntarioPerfilService perfilService;
 
     @Override
+    @Operation(summary = "Realiza busca dos dados das pessoas pelo id", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro ao buscar dados")
+    })
     @GetMapping(value = "/{id}")
     public ResponseEntity<VoluntarioPessoaResponse> findById(@PathVariable Long id) {
         var entity = service.findById(id);
@@ -45,6 +56,12 @@ public class VoluntarioPessoaResource implements ResourceDTO<VoluntarioPessoaReq
 
     @Override
     @Transactional
+    @Operation(summary = "Realiza o cadastro de novas pessoas voluntárias", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cadastro realizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos para serem cadastrados"),
+            @ApiResponse(responseCode = "500", description = "Erro ao cadastrar")
+    })
     @PostMapping
     public ResponseEntity<VoluntarioPessoaResponse> save(@RequestBody @Valid VoluntarioPessoaRequest r) {
         if (LocalDate.now().getYear() - r.dtNascimento().getYear() < 18 && LocalDate.now().getMonthValue() >= r.dtNascimento().getMonthValue()
@@ -65,6 +82,12 @@ public class VoluntarioPessoaResource implements ResourceDTO<VoluntarioPessoaReq
         return ResponseEntity.created(uri).body(response);
     }
 
+    @Operation(summary = "Realiza busca todas as pessoas registradas e pelo CPF, nome, CEP e quantidade de lixo", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro ao buscar dados")
+    })
     @GetMapping
     public ResponseEntity<Collection<VoluntarioPessoaResponse>> findAll(
             @RequestParam(name = "cpf", required = false) String cpf,

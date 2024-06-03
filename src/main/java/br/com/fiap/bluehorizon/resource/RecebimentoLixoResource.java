@@ -4,6 +4,10 @@ import br.com.fiap.bluehorizon.dto.request.RecebimentoLixoRequest;
 import br.com.fiap.bluehorizon.dto.response.RecebimentoLixoResponse;
 import br.com.fiap.bluehorizon.entity.*;
 import br.com.fiap.bluehorizon.service.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +22,8 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 @RestController
-@RequestMapping(value = "/recebimento-lixo")
+@RequestMapping(value = "/recebimento-lixo", produces = {"application/json"})
+@Tag(name = "bluehorizon-api")
 public class RecebimentoLixoResource implements ResourceDTO<RecebimentoLixoRequest, RecebimentoLixoResponse>{
 
     @Autowired
@@ -37,6 +42,12 @@ public class RecebimentoLixoResource implements ResourceDTO<RecebimentoLixoReque
     private TiposLixoService tiposLixoService;
 
     @Override
+    @Operation(summary = "Realiza busca dos recebimentos de lixo pelo id", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro ao buscar dados")
+    })
     @GetMapping(value = "/{id}")
     public ResponseEntity<RecebimentoLixoResponse> findById(@PathVariable Long id) {
         var entity = service.findById(id);
@@ -47,6 +58,12 @@ public class RecebimentoLixoResource implements ResourceDTO<RecebimentoLixoReque
 
     @Override
     @Transactional
+    @Operation(summary = "Realiza o cadastro de novos recebimentos de lixo", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cadastro realizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos para serem cadastrados"),
+            @ApiResponse(responseCode = "500", description = "Erro ao cadastrar")
+    })
     @PostMapping
     public ResponseEntity<RecebimentoLixoResponse> save(@RequestBody @Valid RecebimentoLixoRequest r) {
         var entity = service.toEntity(r);
@@ -62,6 +79,15 @@ public class RecebimentoLixoResource implements ResourceDTO<RecebimentoLixoReque
         return ResponseEntity.created(uri).body(response);
     }
 
+    @Operation(
+            summary = "Realiza busca de todos os recebimentos de lixo e pela data, CPF, nome e estado do ponto de coleta, e pelo nome do tipo de lixo",
+            method = "GET"
+            )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro ao buscar dados")
+    })
     @GetMapping
     public ResponseEntity<Collection<RecebimentoLixoResponse>> findAll(
             @RequestParam(name = "dataRecebimento", required = false) LocalDate dataRecebimento,

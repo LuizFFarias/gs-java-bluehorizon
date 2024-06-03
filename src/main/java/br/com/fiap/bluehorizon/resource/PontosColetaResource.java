@@ -4,6 +4,10 @@ import br.com.fiap.bluehorizon.dto.request.PontosColetaRequest;
 import br.com.fiap.bluehorizon.dto.response.PontosColetaResponse;
 import br.com.fiap.bluehorizon.entity.PontosColeta;
 import br.com.fiap.bluehorizon.service.PontosColetaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +20,20 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.Collection;
 
 @RestController
-@RequestMapping(value = "/pontos-coleta")
+@RequestMapping(value = "/pontos-coleta", produces = {"application/json"})
+@Tag(name = "bluehorizon-api")
 public class PontosColetaResource implements ResourceDTO<PontosColetaRequest, PontosColetaResponse>{
 
     @Autowired
     private PontosColetaService service;
 
     @Override
+    @Operation(summary = "Realiza busca dados dos pontos de coleta pelo id", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro ao buscar dados")
+    })
     @GetMapping(value = "/{id}")
     public ResponseEntity<PontosColetaResponse> findById(@PathVariable Long id) {
         var entity = service.findById(id);
@@ -33,6 +44,12 @@ public class PontosColetaResource implements ResourceDTO<PontosColetaRequest, Po
 
     @Override
     @Transactional
+    @Operation(summary = "Realiza o cadastro de novos pontos de coleta", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cadastro realizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos para serem cadastrados"),
+            @ApiResponse(responseCode = "500", description = "Erro ao cadastrar")
+    })
     @PostMapping
     public ResponseEntity<PontosColetaResponse> save(@RequestBody @Valid PontosColetaRequest r) {
         var entity = service.toEntity(r);
@@ -48,6 +65,12 @@ public class PontosColetaResource implements ResourceDTO<PontosColetaRequest, Po
         return ResponseEntity.created(uri).body(response);
     }
 
+    @Operation(summary = "Realiza busca de todos os pontos de coleta registrados e pelo nome, estado e gerente", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro ao buscar dados")
+    })
     @GetMapping
     public ResponseEntity<Collection<PontosColetaResponse>> findAll(
             @RequestParam(name = "nome", required = false) String nome,

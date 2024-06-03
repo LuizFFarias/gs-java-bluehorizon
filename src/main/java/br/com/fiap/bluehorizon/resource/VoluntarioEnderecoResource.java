@@ -4,6 +4,10 @@ import br.com.fiap.bluehorizon.dto.request.VoluntarioEnderecoRequest;
 import br.com.fiap.bluehorizon.dto.response.VoluntarioEnderecoResponse;
 import br.com.fiap.bluehorizon.entity.VoluntarioEndereco;
 import br.com.fiap.bluehorizon.service.VoluntarioEnderecoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +20,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.Collection;
 
 @RestController
-@RequestMapping(value = "/voluntarios-endereco")
+@RequestMapping(value = "/voluntarios-endereco", produces = {"application/json"})
+@Tag(name = "bluehorizon-api")
 public class VoluntarioEnderecoResource implements ResourceDTO<VoluntarioEnderecoRequest, VoluntarioEnderecoResponse> {
 
     @Autowired
@@ -24,6 +29,12 @@ public class VoluntarioEnderecoResource implements ResourceDTO<VoluntarioEnderec
 
 
     @Override
+    @Operation(summary = "Realiza busca dos endereços dos voluntários pelo id", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro ao buscar dados")
+    })
     @GetMapping(value = "/{id}")
     public ResponseEntity<VoluntarioEnderecoResponse> findById(@PathVariable Long id) {
         var entity = service.findById(id);
@@ -33,6 +44,13 @@ public class VoluntarioEnderecoResource implements ResourceDTO<VoluntarioEnderec
     }
 
     @Override
+    @Operation(summary = "Realiza o cadastro de novos endereços", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Endereço salvo com sucesso."),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos para serem cadastrarados"),
+            @ApiResponse(responseCode = "500", description = "Erro ao cadastrar")
+
+    })
     @PostMapping
     @Transactional
     public ResponseEntity<VoluntarioEnderecoResponse> save(@RequestBody @Valid VoluntarioEnderecoRequest r) {
@@ -49,6 +67,12 @@ public class VoluntarioEnderecoResource implements ResourceDTO<VoluntarioEnderec
         return ResponseEntity.created(uri).body(response);
     }
 
+    @Operation(summary = "Realiza busca de todos os endereços e busca por nome, cep, bairro, estado e pais", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro ao buscar dados")
+    })
     @GetMapping
     public ResponseEntity<Collection<VoluntarioEnderecoResponse>> findAll(
             @RequestParam(name = "cep", required = false) String cep,

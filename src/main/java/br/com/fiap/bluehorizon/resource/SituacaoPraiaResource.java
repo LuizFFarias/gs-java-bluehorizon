@@ -4,6 +4,10 @@ import br.com.fiap.bluehorizon.dto.request.SituacaoPraiaRequest;
 import br.com.fiap.bluehorizon.dto.response.SituacaoPraiaResponse;
 import br.com.fiap.bluehorizon.entity.SituacaoPraia;
 import br.com.fiap.bluehorizon.service.SituacaoPraiaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +20,20 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.Collection;
 
 @RestController
-@RequestMapping(value = "/situacao-praia")
+@RequestMapping(value = "/situacao-praia", produces = {"application/json"})
+@Tag(name = "bluehorizon-api")
 public class SituacaoPraiaResource implements ResourceDTO<SituacaoPraiaRequest, SituacaoPraiaResponse>{
 
     @Autowired
     private SituacaoPraiaService service;
 
     @Override
+    @Operation(summary = "Realiza busca das situações das praias pelo id", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro ao buscar dados")
+    })
     @GetMapping(value = "/{id}")
     public ResponseEntity<SituacaoPraiaResponse> findById(@PathVariable Long id) {
         var entity = service.findById(id);
@@ -33,6 +44,12 @@ public class SituacaoPraiaResource implements ResourceDTO<SituacaoPraiaRequest, 
 
     @Override
     @Transactional
+    @Operation(summary = "Realiza o cadastro de novas praias com suas situações", method = "POST")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Cadastro realizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos para serem cadastrados"),
+            @ApiResponse(responseCode = "500", description = "Erro ao cadastrar")
+    })
     @PostMapping
     public ResponseEntity<SituacaoPraiaResponse> save(@RequestBody @Valid SituacaoPraiaRequest r) {
         var entity = service.toEntity(r);
@@ -48,6 +65,12 @@ public class SituacaoPraiaResource implements ResourceDTO<SituacaoPraiaRequest, 
         return ResponseEntity.created(uri).body(response);
     }
 
+    @Operation(summary = "Realiza busca de todas as praias e pelo nome, cidade e nivel de sujeira", method = "GET")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro ao buscar dados")
+    })
     @GetMapping
     public ResponseEntity<Collection<SituacaoPraiaResponse>> findAll(
             @RequestParam(name = "nome", required = false) String nome,
