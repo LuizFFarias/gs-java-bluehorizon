@@ -6,15 +6,15 @@ import java.util.Collection;
 
 public interface ServiceDTO <Entity, Request, Response>{
 
-    public Collection<Entity> findAll();
+    Collection<Entity> findAll();
 
-    public Collection<Entity> findAll(Example<Entity> example);
+    Collection<Entity> findAll(Example<Entity> example);
 
-    public Entity findById(Long id);
+    Entity findById(Long id);
 
-    public Entity save(Entity e);
+    Entity save(Entity e);
 
-    public Entity toEntity(Request dto);
+    Entity toEntity(Request dto);
 
-    public Response toResponse(Entity e);
+    Response toResponse(Entity e);
 }
