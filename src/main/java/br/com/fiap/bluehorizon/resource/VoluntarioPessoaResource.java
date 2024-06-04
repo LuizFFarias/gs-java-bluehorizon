@@ -2,12 +2,9 @@ package br.com.fiap.bluehorizon.resource;
 
 import br.com.fiap.bluehorizon.dto.request.VoluntarioPessoaRequest;
 import br.com.fiap.bluehorizon.dto.response.VoluntarioPessoaResponse;
-import br.com.fiap.bluehorizon.entity.SituacaoPraia;
 import br.com.fiap.bluehorizon.entity.VoluntarioEndereco;
 import br.com.fiap.bluehorizon.entity.VoluntarioPerfil;
 import br.com.fiap.bluehorizon.entity.VoluntarioPessoa;
-import br.com.fiap.bluehorizon.service.VoluntarioEnderecoService;
-import br.com.fiap.bluehorizon.service.VoluntarioPerfilService;
 import br.com.fiap.bluehorizon.service.VoluntarioPessoaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
