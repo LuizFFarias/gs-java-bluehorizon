@@ -52,7 +52,7 @@ public class VoluntarioEnderecoResource implements ResourceDTO<VoluntarioEnderec
     @Override
     @Operation(summary = "Realiza o cadastro de novos endereços", method = "POST")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Endereço salvo com sucesso."),
+            @ApiResponse(responseCode = "201", description = "Endereço salvo com sucesso."),
             @ApiResponse(responseCode = "400", description = "Dados inválidos para serem cadastrarados"),
             @ApiResponse(responseCode = "500", description = "Erro ao cadastrar")
 
@@ -79,7 +79,7 @@ public class VoluntarioEnderecoResource implements ResourceDTO<VoluntarioEnderec
 
     }
 
-    @Operation(summary = "Realiza busca de todos os endereços e busca por nome, cep, bairro, estado e pais", method = "GET")
+    @Operation(summary = "Realiza busca de todos os endereços e busca por cep, bairro, estado e pais", method = "GET")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Busca realizada com sucesso"),
             @ApiResponse(responseCode = "404", description = "Não encontrado"),
@@ -107,7 +107,6 @@ public class VoluntarioEnderecoResource implements ResourceDTO<VoluntarioEnderec
                 .build();
 
         var matcher = ExampleMatcher.matching()
-                .withMatcher("nome", ExampleMatcher.GenericPropertyMatchers.contains())
                 .withMatcher("cep", ExampleMatcher.GenericPropertyMatchers.contains())
                 .withMatcher("bairro", ExampleMatcher.GenericPropertyMatchers.contains())
                 .withMatcher("estado", ExampleMatcher.GenericPropertyMatchers.contains())

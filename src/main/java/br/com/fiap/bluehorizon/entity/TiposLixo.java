@@ -27,7 +27,7 @@ public class TiposLixo {
     @Column(name = "NOME_LIXO")
     private String nome;
 
-    @Column(name = "VALORKG_LIXO")
+    @Column(name = "VALORKG_LIXO", precision = 4, scale = 2)
     private BigDecimal valorKg;
 
 }

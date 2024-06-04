@@ -52,7 +52,7 @@ public class SituacaoPraiaResource implements ResourceDTO<SituacaoPraiaRequest, 
     @Transactional
     @Operation(summary = "Realiza o cadastro de novas praias com suas situações", method = "POST")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Cadastro realizado com sucesso"),
+            @ApiResponse(responseCode = "201", description = "Cadastro realizado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos para serem cadastrados"),
             @ApiResponse(responseCode = "500", description = "Erro ao cadastrar")
     })
