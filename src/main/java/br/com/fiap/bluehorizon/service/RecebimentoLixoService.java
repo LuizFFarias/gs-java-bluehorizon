@@ -9,6 +9,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Objects;
 
 @Service
 public class RecebimentoLixoService implements ServiceDTO<RecebimentoLixo, RecebimentoLixoRequest, RecebimentoLixoResponse>{
@@ -78,6 +79,8 @@ public class RecebimentoLixoService implements ServiceDTO<RecebimentoLixo, Receb
             var pessoa = pessoaService.findById(dto.pessoa().id());
             var coleta = coletaService.findById(dto.pontosColeta().id());
             var tiposLixo = lixoService.findById(dto.tiposLixo().id());
+
+            if (!Objects.equals(pessoa.getPerfil().getId(), perfil.getId())) return null;
 
             return RecebimentoLixo.builder()
                     .dataRecebimento(dto.dataRecebimento())

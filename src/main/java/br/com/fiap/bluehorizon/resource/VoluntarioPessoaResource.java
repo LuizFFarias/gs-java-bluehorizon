@@ -33,12 +33,6 @@ public class VoluntarioPessoaResource implements ResourceDTO<VoluntarioPessoaReq
     @Autowired
     private VoluntarioPessoaService service;
 
-    @Autowired
-    private VoluntarioEnderecoService enderecoService;
-
-    @Autowired
-    private VoluntarioPerfilService perfilService;
-
     @Override
     @Operation(summary = "Realiza busca dos dados das pessoas pelo id", method = "GET")
     @ApiResponses(value = {

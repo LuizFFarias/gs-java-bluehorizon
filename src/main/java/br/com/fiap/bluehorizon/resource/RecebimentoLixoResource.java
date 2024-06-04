@@ -29,18 +29,6 @@ public class RecebimentoLixoResource implements ResourceDTO<RecebimentoLixoReque
     @Autowired
     private RecebimentoLixoService service;
 
-    @Autowired
-    private VoluntarioPerfilService perfilService;
-
-    @Autowired
-    private VoluntarioPessoaService pessoaService;
-
-    @Autowired
-    private PontosColetaService coletaService;
-
-    @Autowired
-    private TiposLixoService tiposLixoService;
-
     @Override
     @Operation(summary = "Realiza busca dos recebimentos de lixo pelo id", method = "GET")
     @ApiResponses(value = {
