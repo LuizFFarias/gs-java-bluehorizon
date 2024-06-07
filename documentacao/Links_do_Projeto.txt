@@ -1,0 +1,11 @@
+Links do projeto BlueHorizon
+
+Link do repositório: https://github.com/LuizFFarias/gs-java-bluehorizon.git
+
+Link do vídeo do funcionamento do software: https://youtu.be/f-lkLMN0efs
+
+Link do vídeo pitch: https://www.youtube.com/watch?v=P1d18IPrAPM
+
+Link da documentação Swagger: localhost:80/swagger-ui/index.html#
+
+Link da imagem no DockerHub: https://hub.docker.com/r/luizffarias/bluehorizon-spring-gs
